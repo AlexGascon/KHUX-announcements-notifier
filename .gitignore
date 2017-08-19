@@ -1,0 +1,11 @@
+# Python compiled files
+*.pyc
+
+# PyCharm config folder
+.idea/*
+
+# Local environment settings
+.env
+
+# Virtualenv
+venv_khuxna/*
