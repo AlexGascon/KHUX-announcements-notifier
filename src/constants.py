@@ -1,0 +1,1 @@
+ANNOUNCEMENTS_URL = "http://api.sp.kingdomhearts.com/information/list"
