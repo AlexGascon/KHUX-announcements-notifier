@@ -17,3 +17,18 @@ def get_subreddit():
     subreddit = reddit.subreddit(SUBREDDIT_TO_USE)
     return subreddit
 
+
+def post_announcement(announcement):
+    """Posts an Announcement to the default subreddit"""
+
+    # Getting the subreddit
+    subreddit = get_subreddit()
+
+    # Preparing the submission
+    title = "[KHUX] {title}".format(title=announcement.title)
+    url = announcement.url
+
+    # Submitting
+    submission = subreddit.submit(title=title, url=url)
+
+    return submission
