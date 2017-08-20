@@ -1,3 +1,5 @@
+from constants import BASE_URL
+
 
 class Announcement:
     """Announcement posted in the official KHUXNA site
@@ -14,6 +16,16 @@ class Announcement:
     def __str__(self):
         return "Announcement: {title}".format(title=self.title)
 
+    @property
+    def url(self):
+        """Returns the URL of the announcement
+
+        The URLs are of the form http://api.sp.kingdomhearts.com/information/detail/<id>"""
+        base_url = BASE_URL
+        return BASE_URL + "information/detail/{id}".format(id=self.id)
+
+
+
 
 class AnnouncementFactory:
     """Wrapper to create an Announcement object from HTML code.
@@ -29,6 +41,6 @@ class AnnouncementFactory:
         title = html_announcement.a.text
         # The href has the form "detail/<id_number>". We just want the number
         href = html_announcement.a['href']
-        id = href.split("/")[1]
+        announcement_id = href.split("/")[1]
 
-        return Announcement(title=title, id=id)
+        return Announcement(title=title, id=announcement_id)
