@@ -13,3 +13,22 @@ class Announcement:
 
     def __str__(self):
         return "Announcement: {title}".format(title=self.title)
+
+
+class AnnouncementFactory:
+    """Wrapper to create an Announcement object from HTML code.
+
+    This lets us have a better control over the fields used or the way
+    they are processed to create instances
+    """
+
+    @classmethod
+    def announcement(cls, html_announcement):
+        """Creates an Announcement object given its HTML content"""
+
+        title = html_announcement.a.text
+        # The href has the form "detail/<id_number>". We just want the number
+        href = html_announcement.a['href']
+        id = href.split("/")[1]
+
+        return Announcement(title=title, id=id)

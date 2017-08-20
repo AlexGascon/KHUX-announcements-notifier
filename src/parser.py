@@ -1,7 +1,7 @@
 import urllib2
 from bs4 import BeautifulSoup
 
-from models import Announcement
+from models import AnnouncementFactory
 
 
 def get_announcements(url):
@@ -17,18 +17,7 @@ def get_announcements(url):
     list_announcements = soup.find_all('li')
     announcements = []
     for html_announcement in list_announcements:
-        announcement = process_anouncement(html_announcement)
+        announcement = AnnouncementFactory.announcement(html_announcement)
         announcements.append(announcement)
 
     return announcements
-
-
-def process_anouncement(html_announcement):
-    """Creates an Announcement object given its HTML content"""
-
-    title = html_announcement.a.text
-    # The href has the form "detail/<id_number>". We just want the number
-    href = html_announcement.a['href']
-    id = href.split("/")[1]
-
-    return Announcement(title=title, id=id)
