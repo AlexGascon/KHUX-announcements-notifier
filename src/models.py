@@ -1,4 +1,4 @@
-from constants import BASE_URL
+from src.constants import BASE_URL
 
 
 class Announcement:
@@ -22,7 +22,7 @@ class Announcement:
 
         The URLs are of the form http://api.sp.kingdomhearts.com/information/detail/<id>"""
         base_url = BASE_URL
-        return BASE_URL + "information/detail/{id}".format(id=self.id)
+        return base_url + "information/detail/{id}".format(id=self.id)
 
 
 
