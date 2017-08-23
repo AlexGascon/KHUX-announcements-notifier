@@ -24,7 +24,12 @@ class Announcement:
         base_url = BASE_URL
         return base_url + "information/detail/{id}".format(id=self.id)
 
+    def to_mongo(self):
+        """Converts the announcement into a format suitable for MongoDB (a dict)
 
+        The explicit conversion of title to str is to avoid getting strings of
+        type Unicode, as they throw errors when inserted into MongoDB"""
+        return {"_id": self.id, "title": str(self.title)}
 
 
 class AnnouncementFactory:
