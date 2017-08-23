@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from models import AnnouncementFactory
 
 
-def get_announcements(url):
+def parse_announcements(url):
     """Extracts the announcements from the specified URL"""
 
     # Getting HTML content
