@@ -1,13 +1,13 @@
 import os
 import pymongo
 
-from src.constants import DB_COLLECTION_NAME
+from src.constants import DB_COLLECTION_NAME, DB_NAME
 
 
 def get_database():
     """Connects to the DB and returns it"""
     connection = pymongo.MongoClient(os.environ.get("DB_CONNECTION_STRING"))
-    db = connection["DB_NAME"]
+    db = connection[DB_NAME]
 
     return db
 
