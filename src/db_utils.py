@@ -1,7 +1,7 @@
 import os
 import pymongo
 
-from src.constants import DB_COLLECTION_NAME, DB_NAME
+from src.constants import DB_COLLECTION_NAME, DB_NAME, DB_POSTED_KEY
 
 
 def get_database():
@@ -30,7 +30,7 @@ def insert_announcements(announcements):
     collection = get_collection()
 
     # If the announcement is new, we'll set its "posted" field to False
-    update_content = {"$setOnInsert": {"posted": False}}
+    update_content = {"$setOnInsert": {DB_POSTED_KEY: False}}
     for announcement in announcements:
         collection.update(announcement.to_mongo(), update_content, upsert=True)
 
