@@ -2,6 +2,7 @@ import os
 import pymongo
 
 from src.constants import DB_COLLECTION_NAME, DB_NAME, DB_POSTED_KEY
+from src.models import AnnouncementFactory
 
 
 def get_database():
@@ -33,4 +34,22 @@ def insert_announcements(announcements):
     update_content = {"$setOnInsert": {DB_POSTED_KEY: False}}
     for announcement in announcements:
         collection.update(announcement.to_mongo(), update_content, upsert=True)
+
+
+def get_unposted_announcements():
+    """Returns the Announcements objects that haven't been posted yet"""
+
+    collection = get_collection()
+
+    # Obtaining the MongoDB documents
+    query = {DB_POSTED_KEY: False}
+    unposted_documents = collection.find(query)
+
+    # Converting them to Announcements
+    unposted_announcements = []
+    for document in unposted_documents:
+        unposted_announcements.append(AnnouncementFactory.from_mongo(document))
+
+    return unposted_announcements
+
 
