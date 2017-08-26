@@ -18,6 +18,8 @@ def parse_announcements(url):
     announcements = []
     for html_announcement in list_announcements:
         announcement = AnnouncementFactory.announcement(html_announcement)
-        announcements.append(announcement)
+        # We'll only append it to the Announcements array if the string is ascii
+        if announcement.is_ascii():
+            announcements.append(announcement)
 
     return announcements
