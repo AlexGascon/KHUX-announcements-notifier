@@ -29,6 +29,7 @@ def insert_announcements(announcements):
 
     collection = get_collection()
 
+    # If the announcement is new, we'll set its "posted" field to False
     update_content = {"$setOnInsert": {"posted": False}}
     for announcement in announcements:
         collection.update(announcement.to_mongo(), update_content, upsert=True)
