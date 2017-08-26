@@ -3,6 +3,7 @@ import os
 import praw
 
 from constants import BOT_USER_AGENT, BOT_USERNAME, SUBREDDIT_TO_USE
+from src.db_utils import mark_announcement_as_posted
 
 
 def get_subreddit():
@@ -30,5 +31,6 @@ def post_announcement(announcement):
 
     # Submitting
     submission = subreddit.submit(title=title, url=url)
+    mark_announcement_as_posted(announcement)
 
     return submission
