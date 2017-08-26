@@ -24,6 +24,10 @@ class Announcement:
         base_url = BASE_URL
         return base_url + "information/detail/{id}".format(id=self.id)
 
+    def is_ascii(self):
+        """Checks if all the chars in the announcement are ASCII"""
+        return all(ord(char) < 128 for char in self.title)
+
     def to_mongo(self):
         """Converts the announcement into a format suitable for MongoDB (a dict)
 
