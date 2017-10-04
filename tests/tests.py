@@ -1,9 +1,10 @@
 import unittest
+from bs4 import BeautifulSoup
 
 from src.models import AnnouncementFactory, Announcement
 
 
-class TestModels(object):
+class TestModels(unittest.TestCase):
 
     def setUp(self):
         self.title = "Test announcement title"
@@ -39,7 +40,8 @@ class TestModels(object):
         <span class="date">09/01</span><span class="news_cat cat2">UPDATE</span><a class="subject" href="detail/31606" target="_self">September Coliseum Update!</a>
         </li>
         """
-        created_announcement = AnnouncementFactory.announcement(html_announcement)
+        soup = BeautifulSoup(html_announcement, "html.parser")
+        created_announcement = AnnouncementFactory.announcement(soup)
         assert created_announcement.title == "September Coliseum Update!"
         assert created_announcement.id == "31606"
 
@@ -51,6 +53,9 @@ class TestModels(object):
 
     def test_reconverting_mongoannouncement(self):
         """Testing that we can convert to announcement and back to its MongoDB form"""
-        reconverted_announcement = (AnnouncementFactory.announcement(self.mongoannouncement)).to_mongo()
+        reconverted_announcement = (AnnouncementFactory.from_mongo(self.mongoannouncement)).to_mongo()
         assert self.mongoannouncement["_id"] == reconverted_announcement["_id"]
         assert self.mongoannouncement["title"] == reconverted_announcement["title"]
+
+if __name__ == '__main__':
+    unittest.main()
