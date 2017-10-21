@@ -7,7 +7,7 @@ from src.models import AnnouncementFactory
 
 def get_database():
     """Connects to the DB and returns it"""
-    connection = pymongo.MongoClient(os.environ.get("DB_CONNECTION_STRING"))
+    connection = pymongo.MongoClient(os.environ.get("MONGODB_URI"))
     db = connection[DB_NAME]
 
     return db
