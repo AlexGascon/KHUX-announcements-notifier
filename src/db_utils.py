@@ -10,6 +10,12 @@ def get_database():
     connection = pymongo.MongoClient(os.environ.get("MONGODB_URI"))
     db = connection[DB_NAME]
 
+    MONGODB_USER = os.environ.get("MONGODB_USER", None)
+    MONGODB_PASS = os.environ.get("MONGODB_PASS", None)
+
+    if MONGODB_USER and MONGODB_PASS:
+        db.authenticate(MONGODB_USER, MONGODB_PASS)
+
     return db
 
 
