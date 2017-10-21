@@ -1,14 +1,14 @@
 import os
 import pymongo
 
-from src.constants import DB_COLLECTION_NAME, DB_NAME, DB_POSTED_KEY
+from src.constants import DB_POSTED_KEY
 from src.models import AnnouncementFactory
 
 
 def get_database():
     """Connects to the DB and returns it"""
     connection = pymongo.MongoClient(os.environ.get("MONGODB_URI"))
-    db = connection[DB_NAME]
+    db = connection[os.environ.get("MONGODB_DATABASE")]
 
     MONGODB_USER = os.environ.get("MONGODB_USER", None)
     MONGODB_PASS = os.environ.get("MONGODB_PASS", None)
@@ -22,7 +22,7 @@ def get_database():
 def get_collection():
     """Gets the collection we'll use to store the information and returns it"""
     db = get_database()
-    collection = db[DB_COLLECTION_NAME]
+    collection = db[os.environ.get("MONGODB_COLLECTION")]
 
     return collection
 
