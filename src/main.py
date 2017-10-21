@@ -36,6 +36,9 @@ def execute_notifier():
     
 schedule.every().day.at("9:00").do(execute_notifier())
 
+# Setting all announcements to posted on init
+initialize_notifier()
+
 while True:
     schedule.run_pending()
     time.sleep(600)
