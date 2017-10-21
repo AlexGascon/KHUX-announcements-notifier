@@ -22,7 +22,7 @@ def initialize_notifier():
 
 def execute_notifier():
     """Notifier. Parses the announcements and posts the new ones"""
-    print "Running execute_notifier"
+    print("Running execute_notifier")
 
     parse_and_insert()
 
@@ -31,7 +31,7 @@ def execute_notifier():
         for announcement in announcements_to_post:
             post_announcement(announcement)
 
-    print "Ending execute_notifier"
+    print("Ending execute_notifier")
 
     
 schedule.every().day.at("9:00").do(execute_notifier())
