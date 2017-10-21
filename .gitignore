@@ -8,5 +8,5 @@
 .env
 
 # Virtualenv
-venv_khuxna/*
+venv_khux_notifier/*
 activate_venv.bat

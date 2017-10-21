@@ -11,7 +11,7 @@ def parse_announcements(url):
     html_text = urllib2.urlopen(url).read()
 
     # Processing it with BeautifulSoup
-    soup = BeautifulSoup(html_text, "lxml")
+    soup = BeautifulSoup(html_text, "html.parser")
 
     # Getting all the announcements and adding them to an array
     list_announcements = soup.find_all('li')

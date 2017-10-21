@@ -7,7 +7,7 @@ from src.models import AnnouncementFactory
 
 def get_database():
     """Connects to the DB and returns it"""
-    connection = pymongo.MongoClient(os.environ.get("DB_CONNECTION_STRING"))
+    connection = pymongo.MongoClient(os.environ.get("MONGODB_URI"))
     db = connection[DB_NAME]
 
     return db
@@ -53,3 +53,12 @@ def get_unposted_announcements():
     return unposted_announcements
 
 
+def mark_announcement_as_posted(announcement):
+    """Marks the specified announcement as posted"""
+
+    collection = get_collection()
+
+    find_query = {"_id": announcement.id}
+    update_query = {"$set": {DB_POSTED_KEY: True}}
+
+    collection.update_one(find_query, update_query)

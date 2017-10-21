@@ -2,7 +2,8 @@ import os
 
 import praw
 
-from constants import BOT_USER_AGENT, BOT_USERNAME, SUBREDDIT_TO_USE
+from src.constants import BOT_USER_AGENT, BOT_USERNAME
+from src.db_utils import mark_announcement_as_posted
 
 
 def get_subreddit():
@@ -14,7 +15,7 @@ def get_subreddit():
                          client_secret=os.environ.get("CLIENT_SECRET"),
                          username=BOT_USERNAME,
                          password=os.environ.get("BOT_PASSWORD"))
-    subreddit = reddit.subreddit(SUBREDDIT_TO_USE)
+    subreddit = reddit.subreddit(os.environ.get("SUBREDDIT"))
     return subreddit
 
 
@@ -29,6 +30,20 @@ def post_announcement(announcement):
     url = announcement.url
 
     # Submitting
-    submission = subreddit.submit(title=title, url=url)
+    try:
+        submission = subreddit.submit(title=title, url=url)
+        mark_announcement_as_posted(announcement)
 
-    return submission
+        return submission
+
+    except praw.exceptions.APIException as e:
+        print "API Rate Limit error"
+        print e.message
+
+        # In the first stages of the bot, we will simply ignore the unposted announcements.
+        # Posting them later could be unnecessary spam.
+        # TODO: Change in future releases
+        mark_announcement_as_posted(announcement)
+
+        return None
+
