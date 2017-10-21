@@ -37,8 +37,7 @@ def post_announcement(announcement):
         return submission
 
     except praw.exceptions.APIException as e:
-        print "API Rate Limit error"
-        print e.message
+        print ("API Rate Limit error: " + e.message)
 
         # In the first stages of the bot, we will simply ignore the unposted announcements.
         # Posting them later could be unnecessary spam.
