@@ -1,4 +1,11 @@
-import urllib2
+# Workaround to make the project compatible both with Python 2 and Python 3
+try:
+    # For Python 3.0 and later
+    from urllib.request import urlopen
+except ImportError:
+    # Fall back to Python 2's urllib2
+    from urllib2 import urlopen
+
 from bs4 import BeautifulSoup
 
 from models import AnnouncementFactory
@@ -8,7 +15,7 @@ def parse_announcements(url):
     """Extracts the announcements from the specified URL"""
 
     # Getting HTML content
-    html_text = urllib2.urlopen(url).read()
+    html_text = urlopen(url).read()
 
     # Processing it with BeautifulSoup
     soup = BeautifulSoup(html_text, "html.parser")
