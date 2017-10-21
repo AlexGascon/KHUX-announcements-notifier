@@ -6,6 +6,4 @@ BOT_USERNAME = "khux_notice_bot"
 
 SUBREDDIT_TO_USE = "test"  # Starting with /r/test subreddit
 
-DB_NAME = "khux"
-DB_COLLECTION_NAME = "announcements"
 DB_POSTED_KEY = "posted"
