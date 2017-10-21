@@ -30,7 +30,20 @@ def post_announcement(announcement):
     url = announcement.url
 
     # Submitting
-    submission = subreddit.submit(title=title, url=url)
-    mark_announcement_as_posted(announcement)
+    try:
+        submission = subreddit.submit(title=title, url=url)
+        mark_announcement_as_posted(announcement)
 
-    return submission
+        return submission
+
+    except praw.exceptions.APIException as e:
+        print "API Rate Limit error"
+        print e.message
+
+        # In the first stages of the bot, we will simply ignore the unposted announcements.
+        # Posting them later could be unnecessary spam.
+        # TODO: Change in future releases
+        mark_announcement_as_posted(announcement)
+
+        return None
+
