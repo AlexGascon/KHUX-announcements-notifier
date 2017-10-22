@@ -41,4 +41,4 @@ initialize_notifier()
 
 while True:
     schedule.run_pending()
-    time.sleep(600)
+    time.sleep(60)
