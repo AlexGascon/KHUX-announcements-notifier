@@ -14,3 +14,5 @@ def logger(original_function):
         print("Exiting {}. Execution time: {}".format(original_function.__name__, time.now - start_time))
 
         return result
+
+    return wrapper_function()
