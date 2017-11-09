@@ -9,8 +9,9 @@ except ImportError:
 from bs4 import BeautifulSoup
 
 from models import AnnouncementFactory
+from src.decorators import logger
 
-
+@logger
 def parse_announcements(url):
     """Extracts the announcements from the specified URL"""
 

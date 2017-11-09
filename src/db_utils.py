@@ -3,8 +3,9 @@ import pymongo
 
 from src.constants import DB_POSTED_KEY
 from src.models import AnnouncementFactory
+from src.decorators import logger
 
-
+@logger
 def get_database():
     """Connects to the DB and returns it"""
     connection = pymongo.MongoClient(os.environ.get("MONGODB_URI"))
@@ -18,7 +19,7 @@ def get_database():
 
     return db
 
-
+@logger
 def get_collection():
     """Gets the collection we'll use to store the information and returns it"""
     db = get_database()
@@ -26,7 +27,7 @@ def get_collection():
 
     return collection
 
-
+@logger
 def insert_announcements(announcements):
     """Inserts the announcements into the database"""
     # TODO: Check if there's any way of reducing dependencies on this method.
@@ -41,7 +42,7 @@ def insert_announcements(announcements):
     for announcement in announcements:
         collection.update(announcement.to_mongo(), update_content, upsert=True)
 
-
+@logger
 def get_unposted_announcements():
     """Returns the Announcements objects that haven't been posted yet"""
 
@@ -58,7 +59,7 @@ def get_unposted_announcements():
 
     return unposted_announcements
 
-
+@logger
 def mark_announcement_as_posted(announcement):
     """Marks the specified announcement as posted"""
 
