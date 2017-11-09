@@ -36,9 +36,7 @@ def execute_notifier():
 
 
 # Setting the task to run periodically
-# ABOUT: The announcements get posted (generally) at 9:00 AM GMT+2 time. As schedule (or the Heroku server) uses
-# UTC time, this translates to 7:00 AM UTC
-schedule.every().day.at("7:00").do(execute_notifier)
+schedule.every().hour().do(execute_notifier)
 
 # Setting all announcements to posted on init
 initialize_notifier()
