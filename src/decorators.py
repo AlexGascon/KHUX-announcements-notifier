@@ -18,4 +18,4 @@ def logger(original_function):
 
         return execution_result
 
-    return wrapper_function()
+    return wrapper_function
