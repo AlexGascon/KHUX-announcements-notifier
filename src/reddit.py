@@ -4,8 +4,9 @@ import praw
 
 from src.constants import BOT_USER_AGENT, BOT_USERNAME
 from src.db_utils import mark_announcement_as_posted
+from src.decorators import logger
 
-
+@logger
 def get_subreddit():
     """Returns an instance of the subreddit we'll post to"""
 
@@ -18,7 +19,7 @@ def get_subreddit():
     subreddit = reddit.subreddit(os.environ.get("SUBREDDIT"))
     return subreddit
 
-
+@logger
 def post_announcement(announcement):
     """Posts an Announcement to the default subreddit"""
 
