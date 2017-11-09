@@ -44,6 +44,7 @@ def insert_announcements(announcements):
         # This will catch this type of errors
         try:
             collection.update(announcement.to_mongo(), update_content, upsert=True)
+            print("Inserted announcement {}".format(announcement))
         except pymongo.errors.DuplicateKeyError:
             print("The announcement with ID {} is already in the DB".format(announcement.id))
 
