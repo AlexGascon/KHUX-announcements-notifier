@@ -40,7 +40,12 @@ def insert_announcements(announcements):
     # If the announcement is new, we'll set its "posted" field to False
     update_content = {"$setOnInsert": {DB_POSTED_KEY: False}}
     for announcement in announcements:
-        collection.update(announcement.to_mongo(), update_content, upsert=True)
+        # If the notice has been edited, it maintains its ID but has a different title, so the object is not the same
+        # This will catch this type of errors
+        try:
+            collection.update(announcement.to_mongo(), update_content, upsert=True)
+        except pymongo.errors.DuplicateKeyError:
+            print("The announcement with ID {} is already in the DB".format(announcement.id))
 
 @logger
 def get_unposted_announcements():
