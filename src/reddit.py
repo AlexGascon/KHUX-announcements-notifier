@@ -35,6 +35,9 @@ def post_announcement(announcement):
         submission = subreddit.submit(title=title, url=url)
         mark_announcement_as_posted(announcement)
         print("Posted announcement {}".format(announcement))
+        
+        if submission:
+            comment_in_submission(submission)
 
         return submission
 
