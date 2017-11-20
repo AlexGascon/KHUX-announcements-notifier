@@ -2,7 +2,7 @@ import os
 
 import praw
 
-from src.constants import BOT_USER_AGENT, BOT_USERNAME
+from src.constants import BOT_USER_AGENT, BOT_USERNAME, BOT_COMMENT
 from src.db_utils import mark_announcement_as_posted
 from src.decorators import logger
 
@@ -35,6 +35,9 @@ def post_announcement(announcement):
         submission = subreddit.submit(title=title, url=url)
         mark_announcement_as_posted(announcement)
         print("Posted announcement {}".format(announcement))
+        
+        if submission:
+            comment_in_submission(submission)
 
         return submission
 
@@ -47,4 +50,10 @@ def post_announcement(announcement):
         mark_announcement_as_posted(announcement)
 
         return None
+
+@logger
+def comment_in_submission(submission):
+    """Comments after submitting a post to indicate that OP's a robot"""
+    return submission.reply(BOT_COMMENT)
+
 
