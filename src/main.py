@@ -36,7 +36,7 @@ def execute_notifier():
 
 
 # Setting the task to run periodically
-schedule.every().hour.do(execute_notifier)
+schedule.every().hour.at(':00').do(execute_notifier)
 
 # Setting all announcements to posted on init
 initialize_notifier()
