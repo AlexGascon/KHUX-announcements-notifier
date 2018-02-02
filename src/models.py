@@ -52,10 +52,10 @@ class AnnouncementFactory:
         href = html_announcement.a['href']
         announcement_id = href.split("/")[1]
 
-        return Announcement(title=title, id=announcement_id)
+        return Announcement(title=title, announcement_id=announcement_id)
 
     @classmethod
     def from_mongo(cls, mongo_announcement):
         """Creates an Announcement object given its MongoDB form"""
         return Announcement(title=mongo_announcement["title"],
-                            id=mongo_announcement["_id"])
+                            announcement_id=mongo_announcement["_id"])
