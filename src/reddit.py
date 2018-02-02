@@ -27,7 +27,7 @@ def post_announcement(announcement):
     subreddit = get_subreddit()
 
     # Preparing the submission
-    title = "[KHUX] {title}".format(title=announcement.title)
+    title = "[News] {title}".format(title=announcement.title)
     url = announcement.url
 
     # Submitting
