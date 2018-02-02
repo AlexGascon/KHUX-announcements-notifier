@@ -9,7 +9,7 @@ class TestModels(unittest.TestCase):
     def setUp(self):
         self.title = "Test announcement title"
         self.id = "42"
-        self.announcement = Announcement(title=self.title, id=self.id)
+        self.announcement = Announcement(title=self.title, announcement_id=self.id)
         self.mongoannouncement = {"title": self.title, "_id": self.id}
 
     def test_announcement_creation(self):
