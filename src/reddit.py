@@ -35,23 +35,21 @@ def post_announcement(announcement):
     # Submitting
     try:
         submission = subreddit.submit(title=title, url=url)
-        mark_announcement_as_posted(announcement)
-        print("Posted announcement {}".format(announcement))
-        
         if submission:
             comment_in_submission(submission)
 
-        return submission
+    except praw.exceptions.APIException as e:
+        print ("API RATE LIMIT ERROR: " + e.message)
 
     except Exception as e:
-        print ("Error while posting announcement: " + e.message)
+        print ("EXCEPTION: " + e.message)
 
-        # In the first stages of the bot, we will simply ignore the unposted announcements.
+    finally:
+        # In the first stages of the bot, we will mark announcements that raise exceptions as posted anyway.
         # Posting them later could be unnecessary spam.
         # TODO: Change in future releases
         mark_announcement_as_posted(announcement)
-
-        return None
+        print("Posted announcement {}".format(announcement))
 
 
 @logger
