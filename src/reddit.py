@@ -27,7 +27,7 @@ def post_announcement(announcement):
     subreddit = get_subreddit()
 
     # Preparing the submission
-    title = "[KHUX] {title}".format(title=announcement.title)
+    title = "[News] {title}".format(title=announcement.title)
     url = announcement.url
 
     # Submitting
@@ -37,6 +37,11 @@ def post_announcement(announcement):
         print("Posted announcement {}".format(announcement))
         
         if submission:
+            BOT_COMMENT = "Beeeeep bop. I'm a bot! I post SENA's announcements to /r/" + os.environ.get("SUBREDDIT") + \
+                          "\nIf you want to know more about me, you can see my code on " + \
+                          "[Github](https://github.com/AlexGascon/KHUX-announcements-notifier) or contact " + \
+                          "my creator [/u/Pawah](https://www.reddit.com/user/pawah)"
+
             comment_in_submission(submission)
 
         return submission
