@@ -2,9 +2,10 @@ import os
 
 import praw
 
-from src.constants import BOT_USER_AGENT, BOT_USERNAME, BOT_COMMENT
+from src.constants import BOT_USER_AGENT, BOT_USERNAME
 from src.db_utils import mark_announcement_as_posted
 from src.decorators import logger
+
 
 @logger
 def get_subreddit():
@@ -18,6 +19,7 @@ def get_subreddit():
                          password=os.environ.get("BOT_PASSWORD"))
     subreddit = reddit.subreddit(os.environ.get("SUBREDDIT"))
     return subreddit
+
 
 @logger
 def post_announcement(announcement):
@@ -33,32 +35,29 @@ def post_announcement(announcement):
     # Submitting
     try:
         submission = subreddit.submit(title=title, url=url)
-        mark_announcement_as_posted(announcement)
-        print("Posted announcement {}".format(announcement))
-        
         if submission:
-            BOT_COMMENT = "Beeeeep bop. I'm a bot! I post SENA's announcements to /r/" + os.environ.get("SUBREDDIT") + \
-                          "\nIf you want to know more about me, you can see my code on " + \
-                          "[Github](https://github.com/AlexGascon/KHUX-announcements-notifier) or contact " + \
-                          "my creator [/u/Pawah](https://www.reddit.com/user/pawah)"
-
             comment_in_submission(submission)
 
-        return submission
-
     except praw.exceptions.APIException as e:
-        print ("API Rate Limit error: " + e.message)
+        print ("API RATE LIMIT ERROR: " + e.message)
 
-        # In the first stages of the bot, we will simply ignore the unposted announcements.
+    except Exception as e:
+        print ("EXCEPTION: " + e.message)
+
+    finally:
+        # In the first stages of the bot, we will mark announcements that raise exceptions as posted anyway.
         # Posting them later could be unnecessary spam.
         # TODO: Change in future releases
         mark_announcement_as_posted(announcement)
+        print("Posted announcement {}".format(announcement))
 
-        return None
 
 @logger
 def comment_in_submission(submission):
     """Comments after submitting a post to indicate that OP's a robot"""
-    return submission.reply(BOT_COMMENT)
+    bot_comment = "Beeeeep bop. I'm a bot! I post SENA's announcements to /r/" + os.environ.get("SUBREDDIT") + \
+                  "\nIf you want to know more about me, you can see my code on " + \
+                  "[Github](https://github.com/AlexGascon/KHUX-announcements-notifier) or contact " + \
+                  "my creator [/u/Pawah](https://www.reddit.com/user/pawah)"
 
-
+    return submission.reply(bot_comment)
