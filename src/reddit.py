@@ -34,12 +34,12 @@ def post_announcement(announcement):
 
     # Submitting
     try:
-        submission = subreddit.submit(title=title, url=url)
+        submission = subreddit.submit(title=title, url=url, resubmit=False)
         if submission:
             comment_in_submission(submission)
 
     except praw.exceptions.APIException as e:
-        print ("API RATE LIMIT ERROR: " + e.message)
+        print ("API EXCEPTION: " + e.message)
 
     except Exception as e:
         print ("EXCEPTION: " + e.message)
