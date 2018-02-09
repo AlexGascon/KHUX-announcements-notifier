@@ -8,7 +8,7 @@ except ImportError:
 
 from bs4 import BeautifulSoup
 
-from models import AnnouncementFactory
+from src.models import AnnouncementFactory
 from src.decorators import logger
 
 @logger
