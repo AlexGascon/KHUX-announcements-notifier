@@ -7,12 +7,14 @@ from src.parser import parse_announcements
 from src.reddit import post_announcement
 from src.decorators import logger
 
+
 @logger
 def parse_and_insert():
     # Insert announcements into DB
     url = ANNOUNCEMENT_URL
     announcements = parse_announcements(url)
     insert_announcements(announcements)
+
 
 @logger
 def initialize_notifier():
@@ -23,24 +25,12 @@ def initialize_notifier():
     for announcement in get_unposted_announcements():
         mark_announcement_as_posted(announcement)
 
+
 @logger
 def execute_notifier():
     """Notifier. Parses the announcements and posts the new ones"""
 
     parse_and_insert()
 
-    announcements_to_post = get_unposted_announcements()
-    if announcements_to_post:
-        for announcement in announcements_to_post:
-            post_announcement(announcement)
-
-
-# Setting the task to run periodically
-schedule.every().hour.at(':02').do(execute_notifier)
-
-# Setting all announcements to posted on init
-initialize_notifier()
-
-while True:
-    schedule.run_pending()
-    time.sleep(50)
+    for announcement in get_unposted_announcements():
+        post_announcement(announcement)
