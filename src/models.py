@@ -1,4 +1,5 @@
 from src.constants import BASE_URL
+from src.parser import parse_announcement_title
 
 
 class Announcement:
@@ -47,12 +48,15 @@ class AnnouncementFactory:
     def announcement(cls, html_announcement):
         """Creates an Announcement object given its HTML content"""
 
-        title = html_announcement.a.text
         # The href has the form "detail/<id_number>". We just want the number
         href = html_announcement.a['href']
         announcement_id = href.split("/")[1]
 
-        return Announcement(title=title, announcement_id=announcement_id)
+        announcement = Announcement(title="", announcement_id=announcement_id)
+        title = parse_announcement_title(announcement.url)
+        announcement.title = title
+
+        return announcement
 
     @classmethod
     def from_mongo(cls, mongo_announcement):
