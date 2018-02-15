@@ -2,6 +2,7 @@ import unittest
 from bs4 import BeautifulSoup
 
 from src.models import AnnouncementFactory, Announcement
+from src.parser import parse_announcement_title
 
 
 class TestModels(unittest.TestCase):
@@ -56,6 +57,14 @@ class TestModels(unittest.TestCase):
         reconverted_announcement = (AnnouncementFactory.from_mongo(self.mongoannouncement)).to_mongo()
         assert self.mongoannouncement["_id"] == reconverted_announcement["_id"]
         assert self.mongoannouncement["title"] == reconverted_announcement["title"]
+
+
+class TestParser(unittest.TestCase):
+
+    def test_parse_title(self):
+        url = 'http://api.sp.kingdomhearts.com/information/detail/37207'
+        self.assertEqual(parse_announcement_title(url), "Newcomer's and Top-Drawer Deals!")
+
 
 if __name__ == '__main__':
     unittest.main()

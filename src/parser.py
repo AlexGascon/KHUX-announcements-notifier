@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 from src.models import AnnouncementFactory
 from src.decorators import logger
 
+
 @logger
 def parse_announcements(url):
     """Extracts the announcements from the specified URL"""
@@ -31,3 +32,15 @@ def parse_announcements(url):
             announcements.append(announcement)
 
     return announcements
+
+
+def parse_announcement_title(url):
+
+    # Getting HTML content
+    html_text = urlopen(url).read()
+    # Processing it with BeautifulSoup
+    soup = BeautifulSoup(html_text, "html.parser")
+
+    title = soup.find('span', {'class': 'subject'})
+
+    return title.inner_html
