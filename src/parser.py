@@ -41,6 +41,6 @@ def parse_announcement_title(url):
     # Processing it with BeautifulSoup
     soup = BeautifulSoup(html_text, "html.parser")
 
-    title = soup.find('span', {'class': 'subject'})
+    title = soup.find('span', class_='subject'})
 
     return title.inner_html
