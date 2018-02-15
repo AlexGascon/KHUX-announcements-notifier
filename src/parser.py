@@ -36,4 +36,4 @@ def parse_announcement_title(url):
 
     title = soup.find('span', class_='subject')
 
-    return title.inner_html
+    return str(title.text)
