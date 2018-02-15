@@ -8,7 +8,6 @@ except ImportError:
 
 from bs4 import BeautifulSoup
 
-from src.models import AnnouncementFactory
 from src.decorators import logger
 
 
@@ -23,15 +22,9 @@ def parse_announcements(url):
     soup = BeautifulSoup(html_text, "html.parser")
 
     # Getting all the announcements and adding them to an array
-    list_announcements = soup.find_all('li')
-    announcements = []
-    for html_announcement in list_announcements:
-        announcement = AnnouncementFactory.announcement(html_announcement)
-        # We'll only append it to the Announcements array if the string is ascii
-        if announcement.is_ascii():
-            announcements.append(announcement)
+    html_announcements = soup.find_all('li')
 
-    return announcements
+    return html_announcements
 
 
 def parse_announcement_title(url):

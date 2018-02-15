@@ -3,6 +3,7 @@ import time
 
 from src.constants import ANNOUNCEMENT_URL
 from src.db_utils import insert_announcements, get_unposted_announcements, mark_announcement_as_posted
+from src.models import AnnouncementFactory
 from src.parser import parse_announcements
 from src.reddit import post_announcement
 from src.decorators import logger
@@ -12,7 +13,9 @@ from src.decorators import logger
 def parse_and_insert():
     # Insert announcements into DB
     url = ANNOUNCEMENT_URL
-    announcements = parse_announcements(url)
+    html_announcements = parse_announcements(url)
+    announcements = [AnnouncementFactory.announcement(html) for html in html_announcements]
+
     insert_announcements(announcements)
 
 

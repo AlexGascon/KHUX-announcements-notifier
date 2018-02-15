@@ -2,7 +2,6 @@ import unittest
 from bs4 import BeautifulSoup
 
 from src.models import AnnouncementFactory, Announcement
-from src.parser import parse_announcement_title
 
 
 class TestModels(unittest.TestCase):
@@ -63,7 +62,7 @@ class TestParser(unittest.TestCase):
 
     def test_parse_title(self):
         url = 'http://api.sp.kingdomhearts.com/information/detail/37207'
-        self.assertEqual(parse_announcement_title(url), "Newcomer's and Top-Drawer Deals!")
+        self.assertEqual(AnnouncementFactory.parse_announcement_title(url), "Newcomer's and Top-Drawer Deals!")
 
 
 if __name__ == '__main__':
