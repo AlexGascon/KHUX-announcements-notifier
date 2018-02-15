@@ -57,5 +57,13 @@ class TestModels(unittest.TestCase):
         assert self.mongoannouncement["_id"] == reconverted_announcement["_id"]
         assert self.mongoannouncement["title"] == reconverted_announcement["title"]
 
+
+class TestParser(unittest.TestCase):
+
+    def test_parse_title(self):
+        url = 'http://api.sp.kingdomhearts.com/information/detail/37207'
+        self.assertEqual(AnnouncementFactory.parse_announcement_title(url), "Newcomer's and Top-Drawer Deals!")
+
+
 if __name__ == '__main__':
     unittest.main()
