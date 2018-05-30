@@ -63,7 +63,7 @@ def combine_announcements_post(announcements):
         separator = "\n--------------------------------------------------------\n"
         body = separator.join(announcement.title for announcement in announcements)
 
-        submission = subreddit.submit(title=title, body=body, resubmit=False)
+        submission = subreddit.submit(title=title, selftext=body)
         if submission:
             comment_in_submission(submission)
 
