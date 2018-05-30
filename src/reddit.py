@@ -51,7 +51,35 @@ def post_announcement(announcement):
         mark_announcement_as_posted(announcement)
         print("Posted announcement {}".format(announcement))
 
+@logger
+def combine_announcements_post(announcements):
+    """Combines several announcements into a single post"""
 
+    try:
+        subreddit = get_subreddit()
+
+        # Preparing the submission
+        title = "[News] " + ", ".join(announcement.title for announcement in announcements[:2]) + " and more!"
+        separator = "\n--------------------------------------------------------\n"
+        body = separator.join(announcement.title for announcement in announcements)
+
+        submission = subreddit.submit(title=title, body=body, resubmit=False)
+        if submission:
+            comment_in_submission(submission)
+
+    except praw.exceptions.APIException as e:
+        print ("API EXCEPTION: " + e.message)
+
+    except Exception as e:
+        print ("EXCEPTION: " + e.message)
+
+    finally:
+        # In the first stages of the bot, we will mark announcements that raise exceptions as posted anyway.
+        # Posting them later could be unnecessary spam.
+        # TODO: Change in future releases
+        for announcement in announcements:
+            mark_announcement_as_posted(announcement)
+            print("Posted announcement {}".format(announcement))
 @logger
 def comment_in_submission(submission):
     """Comments after submitting a post to indicate that OP's a robot"""
