@@ -61,7 +61,7 @@ def combine_announcements_post(announcements):
         # Preparing the submission
         title = "[News] " + ", ".join(announcement.title for announcement in announcements[:2]) + " and more!"
         separator = "\n--------------------------------------------------------\n"
-        body = separator.join(announcement.title for announcement in announcements)
+        body = separator.join(announcement.title + "\n" + announcement.url for announcement in announcements)
 
         submission = subreddit.submit(title=title, selftext=body)
         if submission:
