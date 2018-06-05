@@ -1,3 +1,4 @@
+import datetime
 import os
 
 import praw
@@ -5,6 +6,7 @@ import praw
 from src.constants import BOT_USER_AGENT, BOT_USERNAME
 from src.db_utils import mark_announcement_as_posted
 from src.decorators import logger
+from src.helpers import format_announcement_for_combined_post
 
 
 @logger
@@ -60,8 +62,9 @@ def combine_announcements_post(announcements):
 
         # Preparing the submission
         title = "[News] " + ", ".join(announcement.title for announcement in announcements[:2]) + " and more!"
-        separator = "\n--------------------------------------------------------\n"
-        body = separator.join(announcement.title for announcement in announcements)
+        separator = "\n"
+        body = "Here are SENA's announcements for " + datetime.datetime.today().strftime("%A %B %-d %Y") + "!\n"
+        body += separator.join(format_announcement_for_combined_post(announcement) for announcement in announcements)
 
         submission = subreddit.submit(title=title, selftext=body)
         if submission:
