@@ -11,11 +11,11 @@ deploy:
   region: "us-east-2"
   role: "arn:aws:iam::598877714121:role/travisci-khux-announcement"
   runtime: "python3.6"
-  handler_name: "handler"
+  handler_name: "src.main.execute_notifier_lambda"
   access_key_id: AKIAJ7ACMYUJD5GPRD7Q
   secret_access_key:
     secure: foPyzUvwUpbDM6l4pfwa7kmSRw4E5jXdeuRr/VX/GLXOVF7jTV3fF/HeMWcpNqeJCtkJ9V5w0bhPsEoai6m9F/u+iquQLPu1EUYio21OHHIEegAK2k/bXEsRQ6Yr98a2GnW41wxmbWWSH8GSH68zmgcEDOAqMyiaQGsvdSI/3QfRJMGWDa3Zt9DfQ8gz59XvbG3BcdLFQ491EA1+MgQsZ6XDSL6oMi0oSjEu6CITX8lQV2CNv1mk+eayK1yJpQIEuNL0VoQzBGIXLaFjye8G4+0aa+YIyYnW3I4IzwOfsxs+7qX9imozrizlJUfu3sxx2g2K5/iW/BQackycFYzv3DO4MM0Amh7h1m0ombguta1AXWRtHTeRW0qsrzDNLnrd6yIccun7GHTLW31KlNwyv70iT2GER6f9bM/lAGkNRYPsm1wdNLYu1HikGxnOvLUtWnD5oYW8eA63Kr+t1UEcj7lm06Nqe2Kk2pKDi6tzAq96uC2PTAhs/QvbiVcFCgdSdqXunwQlJjTJ/4tOEym5C00Y8CAElPZQYRHZn2RwoTpx17VxHMTzcLGrs5nSdHsAd+lMOv5B3/N3TJrs5kWtOVF8ojyiTlaFULHufrnwzX7hxkmG42CLDu5RBwQqOJo07/z4WCcoJlW3IKu4DrLLpAmnN5FOafW5dlelTTwCf8E=
   on:
     repo: "AlexGascon/KHUX-announcements-notifier"
-    branch: master
+    branch: develop
     condition: "$TRAVIS_TEST_RESULT = 0"
