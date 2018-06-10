@@ -37,3 +37,9 @@ def execute_notifier():
         combine_announcements_post(announcements)
     else:
         for announcement in announcements: post_announcement(announcement)
+
+@logger
+def execute_notifier_lambda(event, context):
+    """Notifier. Parses the announcements and posts the new ones"""
+
+    execute_notifier()
