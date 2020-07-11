@@ -8,14 +8,8 @@ from src.decorators import logger
 @logger
 def get_database():
     """Connects to the DB and returns it"""
-    connection = pymongo.MongoClient(os.environ.get("MONGODB_URI"))
-    db = connection[os.environ.get("MONGODB_DATABASE")]
-
-    MONGODB_USER = os.environ.get("MONGODB_USER", None)
-    MONGODB_PASS = os.environ.get("MONGODB_PASS", None)
-
-    if MONGODB_USER and MONGODB_PASS:
-        db.authenticate(MONGODB_USER, MONGODB_PASS)
+    connection = pymongo.MongoClient(os.environ.get("DB_URI"))
+    db = connection[os.environ.get("DB_DATABASE")]
 
     return db
 
@@ -23,7 +17,7 @@ def get_database():
 def get_collection():
     """Gets the collection we'll use to store the information and returns it"""
     db = get_database()
-    collection = db[os.environ.get("MONGODB_COLLECTION")]
+    collection = db[os.environ.get("DB_COLLECTION")]
 
     return collection
 
